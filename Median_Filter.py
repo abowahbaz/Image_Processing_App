@@ -11,9 +11,14 @@ class MedianFilter:
     """
     Class Documentation:
     """
-    def __init__(self):
+    def __init__(self, input_path=None):
         """ Constructor Documentation """
-        self.image = None
+        self.input_path = input_path
+        try:
+            self.image = Image.open(input_path).convert("L")
+        except FileNotFoundError:
+            print("File not found")
+            exit(1)
 
     def median_filter_custom(self, image_array, size=3):
         """ Function Documentation """
@@ -28,27 +33,27 @@ class MedianFilter:
 
         return filtered_img
 
-    def process_image(self, input_path, output_path, size=3):
+    def process_image(self, size=3):
         """ Function Documentation """ 
-        image = Image.open(input_path).convert("L")
-        image_array = np.array(image)
+        image_array = np.array(self.image)
 
         filtered_image_array = self.median_filter_custom(image_array, size)
 
         filtered_image = Image.fromarray(filtered_image_array)
+        
+        output_path = self.input_path.split(".")[0] + "_filtered.png"
         filtered_image.save(output_path)
 
-    def original_image_size(self, image):
+    def original_image_size(self):
         """ Function Documentation """
-        return image.size
+        return self.image.size
 
-    def new_image_size(self, image):
+    def new_image_size(self):
         """ Function Documentation """
-        return image.size
+        return self.image.size
 
 
-run = MedianFilter()
-run.process_image(
-    input_path=r"test_image.png",
-    output_path=r"output_image.png",
-)
+app = MedianFilter("download.jpeg")
+app.process_image(3)
+print(app.original_image_size())
+print(app.new_image_size())
