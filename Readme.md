@@ -1,18 +1,18 @@
-# Image Processing Project
+# Noise Reduction & JPEG Compression 🖼️
 
-## Key Libraries
+## Key Libraries Used 🗃️
 
-### Image Processing Libraries
+### Image Processing Libraries 🏞️️
 
 - Pillow
 - SciPy
 
-### GUI Libraries
+### GUI Libraries 🖥️
 
 - PyQt5
 - PyQt5 Designer
 - PyQt5 Tools
 
-### Other Libraries
+### Other Libraries 🧩
 
 - NumPy

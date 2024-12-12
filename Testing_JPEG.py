@@ -1,4 +1,4 @@
 from JPEG_Compression import Compressor
 
-compressor = Compressor()
-compressor.compress('test_image.png', 'compressed_image', quality=50)
+comp = Compressor("test_image.png")
+comp.compress(50)
