@@ -43,7 +43,7 @@ class Compressor:
                                       [49, 64, 78, 87, 103, 121, 120, 101],
                                       [72, 92, 95, 98, 112, 100, 103, 99]])
         try :
-            self.image = Image.open(self.image_path).convert("L")
+            self.image = Image.open(self.image_path)
         except FileNotFoundError:
             print("File not found")
             sys.exit(1)
@@ -71,7 +71,7 @@ class Compressor:
         """
         return IDCT(IDCT(sub_image.T, norm='ortho').T, norm='ortho')
 
-    def quantize(self, sub_image):
+    def quantize(self, sub_image,mode = 'grayscale'):
         """
         Function Documentation:
         Quantize the DCT coefficients
@@ -81,8 +81,8 @@ class Compressor:
         The quantized sub-image block
         """
         ret = sub_image
-        for i in range(8):
-            for j in range(8):
+        for i in range(min(8,sub_image.shape[0])):
+            for j in range(min(8,sub_image.shape[1])):
                 ret[i, j] = np.round(sub_image[i, j] / (self.quant_matrix[i, j] * self.quality / 100))
         return ret
 
@@ -96,22 +96,38 @@ class Compressor:
         The dequantized sub-image block
         """
         ret = sub_image
-        for i in range(8):
-            for j in range(8):
-                ret[i, j] = np.round(sub_image[i, j] * (self.quant_matrix[i, j] * self.quality / 100))
+        for i in range(min(8,sub_image.shape[0])):
+            for j in range(min(8,sub_image.shape[1])):
+                ret[i, j] = sub_image[i, j] * (self.quant_matrix[i, j] * self.quality / 100)
         return ret
+    
 
-    def compress(self,quality=100):
+    def save_image(self, compressed_image):
+        """
+        Function Documentation:
+        Save the image to the disk
+        Args:
+        compressed_image: The image to be saved
+        Returns:
+        None
+        """
+        compressed_image = np.clip(compressed_image, 0, 255)
+        compressed_image = Image.fromarray(compressed_image.astype(np.uint8))
+        output_path = self.image_path.split(".")[0] + "_compressed.jpg"
+        compressed_image.save(output_path)
+        return compressed_image
+
+
+    def grayscale_compression(self):
         """
         Function Documentation:
         Compress the image
         Saves the compressed image to the disk (adds a suffix "_compressed" to the original image name)
         Args:
-        quality: The quality of the compressed image
+        None
         Returns:
         compressed_image: The compressed image
         """
-        self.quality = quality
         image = self.image
         image_array = np.array(image)
         h = image_array.shape[0]
@@ -128,9 +144,48 @@ class Compressor:
                 idct_block = self.apply_idct(dequantized_block)
                 compressed_image[i:i+8, j:j+8] = idct_block
 
-        compressed_image = np.clip(compressed_image, 0, 255)
-        compressed_image = Image.fromarray(compressed_image.astype(np.uint8))
+        return self.save_image(compressed_image)
 
-        output_path = self.image_path.split(".")[0] + "_compressed.jpg"
-        compressed_image.save(output_path)
-        return compressed_image
+    def rgb_compression(self):
+        """
+        Function Documentation:
+        Compress the image
+        Saves the compressed image to the disk (adds a suffix "_compressed" to the original image name)
+        Args:
+        None
+        Returns:
+        compressed_image: The compressed image
+        """
+        image = self.image
+        image_array = np.array(image)
+        h = image_array.shape[0]
+        w = image_array.shape[1]
+
+        compressed_image = np.zeros((h, w, 3))
+
+        for i in range(0, h, 8):
+            for j in range(0, w, 8):
+                for k in range(3):
+                    block = image_array[i:i+8, j:j+8, k]
+                    dct_block = self.apply_dct(block)
+                    quantized_block = self.quantize(dct_block)
+                    dequantized_block = self.dequantize(quantized_block)
+                    idct_block = self.apply_idct(dequantized_block)
+                    compressed_image[i:i+8, j:j+8, k] = idct_block
+
+        return self.save_image(compressed_image)
+
+    def compress(self):
+        """
+        Function Documentation:
+        Compress the image
+        Saves the compressed image to the disk (adds a suffix "_compressed" to the original image name)
+        Args:
+        None
+        Returns:
+        compressed_image: The compressed image
+        """
+        if self.image.mode == "RGB":
+            return self.rgb_compression()
+        else:
+            return self.grayscale_compression()
