@@ -1,0 +1,893 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1082</width>
+    <height>703</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/* Every widget */
+QWidget {
+	background-color: transparent;
+	color: #e6e6e6;
+	alternate-background-color: #3d3d3d;
+}
+
+/* Mouse tooltips */
+QToolTip {
+	border: 0.05em solid #323232;
+	background-color: #323232;
+	color: #ecf0f1;
+}
+
+/* Define background on QDialog and QMainWindow */
+QDialog, QMainWindow {
+	background-color: #323232;
+}
+
+/* Top Menu Bar */
+QMenuBar::item:selected {
+	background: #444444;
+}
+QMenu {
+	background-color: #323232;
+}
+QMenu::item {
+	padding-left: 1.5em;
+	padding-right: 0.75em;
+	padding-top: 0.25em;
+	padding-bottom: 0.25em;
+}
+QMenu::item:selected {
+	background: #444444;
+	border: 0.05em solid #bdc3c7;
+}
+QMenu::item:disabled {
+	background-color: #444444;
+	color: #828790;
+}
+
+/* Tool Button (Toolbar) */
+QToolButton::disabled {
+	background-color: #444444;
+	color: #828790;
+}
+QToolButton::hover {
+	background-color: #3d3d3d;
+}
+
+/* Dock Widget */
+QDockWidget {
+	color: #e6e6e6;
+	font-weight: 500;
+}
+QDockWidget::title {
+	background: #3d3d3d;
+	padding-top: 0.20em;
+	padding-left: 0.10em;
+}
+/* Dock Buttons: For visibility */
+QDockWidget::close-button, QDockWidget::float-button {
+	background-color: #bdc3c7;
+	border: 0.05em solid #000;
+	border-radius: 0.3em;
+}
+
+/* Push Buttons */
+QPushButton {
+	background-color: #404040;
+}
+QPushButton::disabled {
+	background-color: #828790;
+}
+
+/* Table headers */
+QHeaderView::section {
+	background-color: #222;
+	padding-left: 0.2em;
+	border: 0.05em solid #323232;
+}
+
+/* Tab Widgets: Disable ugly borders */
+QTabWidget::pane {
+	border: 0em;
+}
+
+/* Text Edit: Log and Debugger borders */
+QTextEdit {
+	border: 0.05em solid #828790;
+}
+
+/* QTabBar (Settings Dialog) */
+QTabBar::tab {
+	border: 0.05em solid #444;
+	border-bottom-style: none;
+	background-color: #333333;
+	padding-left: 1em;
+	padding-right: 1em;
+	padding-top: 0.25em;
+	padding-bottom: 0.25em;
+	margin-right: -0.2em;
+}
+QTabBar::tab:last {
+	margin-right: 0em;
+}
+QTabBar::tab:!selected {
+	color: #b1b1b1;
+	border-bottom-style: solid;
+	margin-top: 0.15em;
+	background-color: #292929;
+}
+QTabBar::tab:hover {
+	background-color: #333333;
+	color: #ecf0f1;
+}
+
+/* Group Boxes (Settings Dialog) */
+QGroupBox {
+	margin-top: 1em;
+	font-size: 8pt;
+	border: 0.05em solid #bdc3c7;
+}
+QGroupBox::title {
+	subcontrol-origin: margin;
+	subcontrol-position: top;
+	padding: 0.3em 0.5em 0.3em 0.5em;
+	color: #fff;
+}
+
+/* Checkboxes */
+QCheckBox::indicator {
+	border-radius: 0.1em;
+	border: 0.05em solid #ecf0f1;
+	margin-top: 0.05em;
+	width: 0.8em;
+	height: 0.8em;
+}
+QCheckBox::indicator:checked {
+	background-color: #2ecc71; /* Green */
+}
+QCheckBox::indicator:unchecked {
+	background-color: #e74c3c; /* Red */
+}
+QCheckBox::indicator::disabled {
+	background-color: #7f8c8d; /* Gray */
+}
+
+/* Radio Buttons */
+QRadioButton::indicator {
+	border-radius: 0.4em;
+	border: 0.05em solid;
+	border-color: white;
+	width: 0.8em;
+	height: 0.8em;
+}
+QRadioButton::indicator:checked {
+	background-color: #2ecc71; /* Green */
+}
+QRadioButton::indicator:unchecked {
+	background-color: #e74c3c; /* Red */
+}
+QRadioButton::indicator::disabled {
+	background-color: #7f8c8d; /* Gray */
+}
+
+/* Combo Boxes */
+QComboBox {
+	background-color: #404040;
+	color: #fff;
+	border: 0.05em solid #1e1e1e;
+	border-radius: 0.15em;
+	padding-bottom: 0.2em;
+	padding-left: 0.4em;
+}
+QComboBox::disabled {
+	background-color: #828790;
+	color: #fff;
+}
+
+/* Spin Boxes */
+QSpinBox, QDoubleSpinBox {
+	background: transparent;
+	border: 0.05em solid #4d4940;
+	border-radius: 0.10em;
+}
+
+/* List Widget */
+QListWidget::item:selected {
+	background-color: #3d3d3d;
+	color: #ecf0f1;
+}
+QListWidget::item:hover {
+	background-color: #4c4b4b;
+	color: #ecf0f1;
+}
+
+
+/*** RPCS3 Specifics ***/
+
+/* Define background on Setting Widgets,
+CG Disasm, Trophy Manager, RSX Debugger
+which are neither QDialog nor QMainWindow */
+QWidget#coreTab, QWidget#gpuTab, QWidget#audioTab,
+QWidget#inputTab, QWidget#systemTab, QWidget#networkTab,
+QWidget#emulatorTab, QWidget#debugTab,
+QWidget#cg_disasm, QWidget#trophy_manager {
+	background-color: #323232;
+}
+
+/* Trophy Notification Popup */
+QWidget#trophy_notification_frame {
+	background-color: #323232;
+	color: #e6e6e6;
+}
+
+/* Game Grid Font */
+QTableWidget#game_grid {
+	font-weight: 600;
+	font-size: 8pt;
+	font-family: Lucida Grande;
+	selection-color: #e6e6e6;
+}
+QTableWidget#game_grid::item:selected:active {
+	selection-background-color: #4c4b4b;
+}
+QTableWidget#game_grid::item:selected:!active {
+	selection-background-color: #3d3d3d;
+}
+
+/* Set Toolbar Slider Size */
+QSlider#sizeSlider::groove:horizontal {
+	border: 0em solid transparent;
+	height: .3em;
+	background: #fff;
+}
+QSlider#sizeSlider::handle:horizontal {
+	width: 1em;
+	margin: -.8em 0;
+}
+
+/* Set Theme UI colors */
+QLabel#gamelist_icon_background_color {
+	color: transparent;
+}
+
+/* Set Taskbar Thumbnail colors */
+QLabel#thumbnail_icon_color {
+	color: #444444;
+}
+
+/* Memory Viewer */
+QLabel#memory_viewer_address_panel {
+	color: #00cbff; /* Font Color: Blue */
+}
+QLabel#memory_viewer_hex_panel {
+	color: #bdc3c7; /* Font Color: Grey */
+}
+QLabel#memory_viewer_ascii_panel {
+	color: #bdc3c7; /* Font Color: Grey */
+}
+
+/* Debugger colors */
+QLabel#debugger_frame_breakpoint {
+	color: #000000; /* Font Color: Black */
+	background-color: #ffff00; /* Yellow */
+}
+QLabel#debugger_frame_pc {
+	color: #000000; /* Font Color: Black */
+	background-color: #00ff00; /* Green */
+}
+
+/* Set Log colors */
+QTextEdit#log_frame {
+	background-color: #000000; /* Black */
+}
+QLabel#log_level_always {
+	color: #00ffff; /* Cyan */
+}
+QLabel#log_level_fatal {
+	color: #ff00ff; /* Fuchsia */
+}
+QLabel#log_level_error {
+	color: #ff0000; /* Red */
+}
+QLabel#log_level_todo {
+	color: #ff6000; /* Orange */
+}
+QLabel#log_level_success {
+	color: #00ff00; /* Green */
+}
+QLabel#log_level_warning {
+	color: #ffff00; /* Yellow */
+}
+QLabel#log_level_notice {
+	color: #ffffff; /* White */
+}
+QLabel#log_level_trace {
+	color: #808080; /* Gray */
+}
+QLabel#log_stack {
+	color: #ffffff; /* White */
+}
+/* Set TTY colors */
+QTextEdit#tty_frame {
+	background-color: #000000; /* Black */
+}
+QLabel#tty_text {
+	color: #ffffff; /* White */
+}</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QToolBox" name="toolBox">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>30</y>
+      <width>891</width>
+      <height>551</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>2</number>
+    </property>
+    <widget class="QWidget" name="page">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>891</width>
+       <height>458</height>
+      </rect>
+     </property>
+     <attribute name="label">
+      <string>Page 1</string>
+     </attribute>
+     <widget class="QTextBrowser" name="textBrowser_2">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>160</y>
+        <width>511</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">width: 250px;
+height: 30px;
+margin: 0 auto;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+text-align: center;
+border: 2px solid rgb(255, 255, 255);
+line-height: 40px;</string>
+      </property>
+      <property name="html">
+       <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Nitro Team&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QTextBrowser" name="textBrowser_1">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>50</y>
+        <width>121</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="html">
+       <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;HI!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QTextBrowser" name="textBrowser_3">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>280</y>
+        <width>541</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="html">
+       <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;JPEG Compression &amp;amp; Noise Reduction&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_2">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>891</width>
+       <height>458</height>
+      </rect>
+     </property>
+     <attribute name="label">
+      <string>Page 2</string>
+     </attribute>
+     <widget class="QPushButton" name="pushButton_1">
+      <property name="geometry">
+       <rect>
+        <x>380</x>
+        <y>370</y>
+        <width>141</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="text">
+       <string>Processing</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>520</x>
+        <y>83</y>
+        <width>251</width>
+        <height>191</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: white;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_1">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>83</y>
+        <width>251</width>
+        <height>191</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: white;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QCommandLinkButton" name="commandLinkButton_2">
+      <property name="geometry">
+       <rect>
+        <x>390</x>
+        <y>163</y>
+        <width>31</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QCommandLinkButton {
+    padding: 10px 20px;
+	background-color: rgb(71, 71, 71);
+    color: white;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+QCommandLinkButton:hover {
+    
+	background-color: rgb(120, 120, 120);
+}
+
+QCommandLinkButton:pressed {
+    
+	background-color: rgb(0, 0, 0);
+}
+
+QCommandLinkButton:focus {
+    outline: none; /* إزالة الحدود عند التركيز */
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="Pic/Pic.qrc">
+        <normaloff>:/newPrefix/Pics/r.png</normaloff>:/newPrefix/Pics/r.png</iconset>
+      </property>
+     </widget>
+     <widget class="QCommandLinkButton" name="commandLinkButton_1">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>163</y>
+        <width>31</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QCommandLinkButton {
+    padding: 10px 20px;
+	background-color: rgb(71, 71, 71);
+    color: white;
+    text-align: left;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+QCommandLinkButton:hover {
+    
+	background-color: rgb(120, 120, 120);
+}
+
+QCommandLinkButton:pressed {
+    
+	background-color: rgb(0, 0, 0);
+}
+
+QCommandLinkButton:focus {
+    outline: none; /* إزالة الحدود عند التركيز */
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="Pic/Pic.qrc">
+        <normaloff>:/newPrefix/Pics/l.webp</normaloff>:/newPrefix/Pics/l.webp</iconset>
+      </property>
+     </widget>
+     <widget class="QTextBrowser" name="textBrowser_5">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>290</y>
+        <width>171</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="html">
+       <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Original photo&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QTextBrowser" name="textBrowser_6">
+      <property name="geometry">
+       <rect>
+        <x>560</x>
+        <y>290</y>
+        <width>171</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="html">
+       <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;New photo&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QTextBrowser" name="textBrowser_4">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>20</y>
+        <width>256</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="html">
+       <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;JPEG Compression&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_3">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>891</width>
+       <height>458</height>
+      </rect>
+     </property>
+     <attribute name="label">
+      <string>Page</string>
+     </attribute>
+     <widget class="QLabel" name="label_6">
+      <property name="geometry">
+       <rect>
+        <x>520</x>
+        <y>60</y>
+        <width>251</width>
+        <height>191</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: white;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>60</y>
+        <width>251</width>
+        <height>191</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: white;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QCommandLinkButton" name="commandLinkButton_4">
+      <property name="geometry">
+       <rect>
+        <x>390</x>
+        <y>140</y>
+        <width>31</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QCommandLinkButton {
+    padding: 10px 20px;
+	background-color: rgb(71, 71, 71);
+    color: white;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+QCommandLinkButton:hover {
+    
+	background-color: rgb(120, 120, 120);
+}
+
+QCommandLinkButton:pressed {
+    
+	background-color: rgb(0, 0, 0);
+}
+
+QCommandLinkButton:focus {
+    outline: none; /* إزالة الحدود عند التركيز */
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="Pic/Pic.qrc">
+        <normaloff>:/newPrefix/Pics/r.png</normaloff>:/newPrefix/Pics/r.png</iconset>
+      </property>
+     </widget>
+     <widget class="QCommandLinkButton" name="commandLinkButton_3">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>140</y>
+        <width>31</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QCommandLinkButton {
+    padding: 10px 20px;
+	background-color: rgb(71, 71, 71);
+    color: white;
+    text-align: left;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+QCommandLinkButton:hover {
+    
+	background-color: rgb(120, 120, 120);
+}
+
+QCommandLinkButton:pressed {
+    
+	background-color: rgb(0, 0, 0);
+}
+
+QCommandLinkButton:focus {
+    outline: none; /* إزالة الحدود عند التركيز */
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="Pic/Pic.qrc">
+        <normaloff>:/newPrefix/Pics/l.webp</normaloff>:/newPrefix/Pics/l.webp</iconset>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBox">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>320</y>
+        <width>151</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Median</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Gausing</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Avg</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>400</y>
+        <width>141</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="text">
+       <string>Processing</string>
+      </property>
+     </widget>
+     <widget class="QTextBrowser" name="textBrowser_10">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>320</y>
+        <width>91</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="html">
+       <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Select Filter&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QTextBrowser" name="textBrowser_8">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>270</y>
+        <width>181</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="html">
+       <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Original photo&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QTextBrowser" name="textBrowser_9">
+      <property name="geometry">
+       <rect>
+        <x>560</x>
+        <y>270</y>
+        <width>181</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="html">
+       <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;New Photo&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QTextBrowser" name="textBrowser_7">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>10</y>
+        <width>256</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="html">
+       <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Noise Reduction &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1082</width>
+     <height>26</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources>
+  <include location="Pic/Pic.qrc"/>
+ </resources>
+ <connections/>
+</ui>
