@@ -4,11 +4,9 @@
     The median filter replaces each pixel's value with the median
     value of the pixels in the neighborhood.
     The size of the neighborhood is specified by the user.
-    The median filter is used to remove noise from an image.
     The median filter is a non-linear filter.
     The median filter is used to remove salt and pepper noise from an image.
-    The median filter is used to remove impulse noise from an image.
-    The median filter is used to remove random noise from an image.
+    The median filter is used to remove impulse/random noise from an image.
 """
 
 from os import sys
@@ -94,7 +92,7 @@ class MedianFilter:
 
         filtered_image = Image.fromarray(filtered_image_array)
 
-        output_path = self.input_path.split(".")[0] + "_filtered.png"
+        output_path = "filtered/" + self.input_path.split("/")[-1].split(".")[0] + "_median_filtered.jpg"
         filtered_image.save(output_path)
         return filtered_image
 
@@ -116,8 +114,3 @@ class MedianFilter:
         """
         return self.process_image().size
 
-
-app = MedianFilter("download.jpeg")
-app.process_image(3)
-print(app.original_image_size())
-print(app.new_image_size())

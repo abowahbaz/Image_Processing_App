@@ -113,7 +113,7 @@ class Compressor:
         """
         compressed_image = np.clip(compressed_image, 0, 255)
         compressed_image = Image.fromarray(compressed_image.astype(np.uint8))
-        output_path = self.image_path.split(".")[0] + "_compressed.jpg"
+        output_path = "compressed/" + self.image_path.split("/")[-1].split(".")[0] + "_compressed.jpg"
         compressed_image.save(output_path)
         return compressed_image
 
@@ -174,6 +174,29 @@ class Compressor:
                     compressed_image[i:i+8, j:j+8, k] = idct_block
 
         return self.save_image(compressed_image)
+
+    def old_size(self)->int:
+        """
+        Function Documentation:
+        Get the size of the original image
+        Args:
+        None
+        Returns:
+        The size of the original image
+        """
+        return self.image.size
+    
+    def new_size(self)->int: 
+        """
+        Function Documentation:
+        Get the size of the compressed image
+        Args:
+        None
+        Returns:
+        The size of the compressed image
+        """
+        compressed_image = Image.open("compressed/" + self.image_path.split("/")[-1].split(".")[0] + "_compressed.jpg")
+        return compressed_image.size
 
     def compress(self):
         """

@@ -1,55 +1,111 @@
+"""
+    Module Documentation:
+    This module is used to apply average filter to an image.
+    The average filter replaces each pixel's value with the average
+    value of the pixels in the neighborhood.
+"""
+
+from os import sys
 from PIL import Image
 import numpy as np
 
-class ImageFiler:
-    def __init__(self):
-        self.image = None
-        self.filtered_image = None
-        self.width = None
-        self.height = None
+class AverageFilter:
+    """
+    Class Documentation:
+    This class is used to apply average filter to an image.
+    The average filter replaces each pixel's 
+    value with the average value of the pixels in the neighborhood.
+    
+    Attributes:
+    input_path: The path of the input image file.
+    image: The input image.
+    
+    Methods:
+    __init__: The constructor method used to initialize the class attributes.
+    average_filter_custom: The method used to apply average filter to an image.
+    process_image: The method used to process the image.
+    original_image_size: The method used to get the size of the original image.
+    new_image_size: The method used to get the size of the new image.
+    
+    """
 
-    def load_image(self, image_file):
-        self.image = Image.open(image_file)
-        self.width, self.height = self.image.size
+    def __init__(self, input_path=None):
+        """Constructor Documentation
+        This method is used to initialize the class attributes.
+        
+        Args:
+        input_path: The path of the input image file.
+        
+        Returns:
+        None
+        
+        """
+        self.input_path = input_path
+        try:
+            self.image = Image.open(input_path).convert("L")
+        except FileNotFoundError:
+            print("File not found")
+            sys.exit(1)
 
-    def apply_filter(self, kernel_size):
-        # Convert image to numpy array
+    def average_filter_custom(self, image_array, size=3):
+        """Function Documentation
+        This function is used to apply average filter to an image.
+        The average filter replaces each pixel's 
+        value with the average value of the pixels in the neighborhood.
+        
+        Args:
+        image_array: The input image array.
+        size: The size of the neighborhood.
+        
+        Returns:
+        filtered_img: The filtered image array.
+        
+        """
+        pad = size // 2
+        padded_img = np.pad(image_array, pad, mode="constant", constant_values=0)
+        filtered_img = np.zeros_like(image_array)
+
+        for i in range(image_array.shape[0]):
+            for j in range(image_array.shape[1]):
+                window = padded_img[i : i + size, j : j + size]
+                filtered_img[i, j] = np.mean(window)
+
+        return filtered_img
+
+    def process_image(self, size=3):
+        """Function Documentation
+        This function is used to process the image.
+        
+        Args:
+        size: The size of the neighborhood.
+        
+        Returns:
+        filtered_image: The filtered image.
+        """
         image_array = np.array(self.image)
-        
-        # Handle color images
-        if len(image_array.shape) == 3:
-            # Create a new array to store the blurred image with the same shape as the original
-            blurred_image = np.zeros_like(image_array, dtype=np.uint8)
-            
-            # Process each color channel separately
-            for channel in range(image_array.shape[2]):
-                channel_array = image_array[:,:,channel]
-                blurred_channel = self._blur_channel(channel_array, kernel_size)
-                blurred_image[:,:,channel] = blurred_channel
-        else:
-            # Grayscale image
-            blurred_image = self._blur_channel(image_array, kernel_size)
-        
-        self.filtered_image = Image.fromarray(blurred_image)
 
-    def _blur_channel(self, channel_array, kernel_size):
-        padding = kernel_size // 2
-        height, width = channel_array.shape
-        blurred_channel = np.zeros_like(channel_array, dtype=np.uint8)
-        
-        # Extend the array with border pixels for better edge handling
-        padded_array = np.pad(channel_array, pad_width=padding, mode='edge')
-        
-        for y in range(height):
-            for x in range(width):
-                window = padded_array[y:y+kernel_size, x:x+kernel_size]
-                blurred_channel[y, x] = int(np.clip(window.mean(), 0, 255))
-        
-        return blurred_channel
+        filtered_image_array = self.average_filter_custom(image_array, size)
 
-    def save_image(self, output_file):
-        self.filtered_image.save(output_file)
+        filtered_image = Image.fromarray(filtered_image_array)
 
-    def display_images(self):
-        self.image.show()
-        self.filtered_image.show()
+        output_path = "filtered/" + self.input_path.split("/")[-1].split(".")[0] + "_average_filtered.jpg"
+        filtered_image.save(output_path)
+        return filtered_image
+
+    def original_image_size(self):
+        """Function Documentation
+        This function is used to get the size of the original image.
+        
+        Returns:
+        image.size: The size of the original image.
+        """
+        return self.image.size
+
+    def new_image_size(self):
+        """Function Documentation
+        This function is used to get the size of the new image.
+        
+        Returns:
+        self.image.size: The size of the new image. 
+        """
+        return self.process_image().size
