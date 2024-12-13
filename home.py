@@ -3,9 +3,9 @@ import sys
 import os
 from PyQt5.uic import loadUi
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QMainWindow, QApplication,QGraphicsView,QGraphicsScene
+from PyQt5.QtWidgets import QMainWindow, QApplication,QGraphicsScene
 from PyQt5 import QtGui
-from PyQt5.QtCore import Qt
+import ctypes
 
 
 # Algorithm Imports
@@ -41,12 +41,7 @@ class JPEG(QMainWindow):
         self.compress_button.clicked.connect(self.compress)
         self.input_path = ""
         self.output_path = ""
-
-
-    def handle_visible(self):
-        flag = (self.input_path != "")
-        self.compress_button.setVisible(flag)
-     
+        self.compress_button.setDisabled(True)     
       
 
     def to_home(self):
@@ -64,13 +59,12 @@ class JPEG(QMainWindow):
             print("No file selected")
 
         self.output_path = "compressed/" + self.input_path.split('/')[-1].split('.')[0] + "_compressed.jpg"          
-        self.handle_visible()
+        self.compress_button.setDisabled(False)
         scene = QGraphicsScene()
         pixmap = QtGui.QPixmap(self.input_path)
         scene.addPixmap(pixmap)
         self.image_view.setScene(scene)
-        self.image_view.show()
-        
+        self.image_view.show()        
 
     # Compress and view a comparison of the original and compressed images
 
@@ -185,7 +179,12 @@ class NoiseReduction(QMainWindow):
 app = QApplication(sys.argv)
 app.setApplicationName("Image Processing App")
 app.setWindowIcon(QtGui.QIcon('icon.png'))
+myappid = 'nitros.dip.practical.1' 
+ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 app.setStyle('Fusion')  
+
+
+
 home = Home()
 jpeg = JPEG()
 noise = NoiseReduction()
@@ -196,7 +195,7 @@ widgets.addWidget(jpeg)
 widgets.addWidget(noise)
 
 widgets.setFixedHeight(768)
-widgets.setFixedWidth(1024)
+widgets.setFixedWidth(1366) #! could be set to 1366 --> try scaling and editing the gui with 1366px
 widgets.show()
 
 
