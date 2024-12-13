@@ -195,7 +195,7 @@ widgets.addWidget(jpeg)
 widgets.addWidget(noise)
 
 widgets.setFixedHeight(768)
-widgets.setFixedWidth(1366) #! could be set to 1366 --> try scaling and editing the gui with 1366px
+widgets.setFixedWidth(1366) 
 widgets.show()
 
 
