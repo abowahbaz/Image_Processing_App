@@ -11,26 +11,33 @@ Steps of JPEG compression:
 5. Store the encoded coefficients.
 """
 
-import numpy as np
 from os import sys
+import numpy as np
 from PIL import Image
 from scipy.fftpack import dct  as DCT
 from scipy.fftpack import idct  as IDCT
 
 class Compressor:
+    """
+    Class Documentation:
+    This class is used to apply JPEG compression to an image.
+    Args:
+    image_path: The path of the input image file.
+    quality: The quality of the compressed image.
+
+    Attributes:
+    quality: The quality of the compressed image.
+    image_path: The path of the input image file.
+    quant_matrix: The quantization matrix.
+    image: The input image.
+    """
     def __init__(self,image_path, quality=100):
         """
-        Class Documentation:
-        This class is used to apply JPEG compression to an image.
+        Function Documentation:
+        The constructor method used to initialize the class attributes.
         Args:
         image_path: The path of the input image file.
         quality: The quality of the compressed image.
-
-        Attributes:
-        quality: The quality of the compressed image.
-        image_path: The path of the input image file.
-        quant_matrix: The quantization matrix.
-        image: The input image.
         """
         self.quality = quality
         self.image_path = image_path
@@ -71,7 +78,7 @@ class Compressor:
         """
         return IDCT(IDCT(sub_image.T, norm='ortho').T, norm='ortho')
 
-    def quantize(self, sub_image,mode = 'grayscale'):
+    def quantize(self, sub_image):
         """
         Function Documentation:
         Quantize the DCT coefficients
@@ -210,5 +217,5 @@ class Compressor:
         """
         if self.image.mode == "RGB":
             return self.rgb_compression()
-        else:
-            return self.grayscale_compression()
+        
+        return self.grayscale_compression()
