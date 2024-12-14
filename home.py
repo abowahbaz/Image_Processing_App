@@ -119,7 +119,7 @@ class NoiseReduction(QMainWindow):
         self.filter_button.setVisible(self.state)
         self.filter_list.setVisible(self.state)
         self.intensity_box.setVisible(self.state)
-        self.state = not self.state
+        
 
     def to_home(self): # Reset fields and go back to home from noise reduction
         self.reset_fields()
@@ -131,7 +131,7 @@ class NoiseReduction(QMainWindow):
             self.input_path = QtWidgets.QFileDialog.getOpenFileName(self, 'Open file', 'Images/')[0]
         except:
             print("No file selected")
-
+        self.state = True
         self.handle_visible()
         scene = QGraphicsScene()
         pixmap = QtGui.QPixmap(self.input_path)
@@ -171,6 +171,7 @@ class NoiseReduction(QMainWindow):
         self.old_image_view.setScene(None)
         self.new_image_view.setScene(None)
         self.reset_fields()
+        self.state = False
         widgets.setCurrentWidget(home)
 
 
