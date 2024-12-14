@@ -9,6 +9,10 @@ Steps of JPEG compression:
 3. Quantize the DCT coefficients.
 4. Huffman encode & run-length encode the quantized coefficients.
 5. Store the encoded coefficients.
+6. Decode the encoded coefficients.
+7. Dequantize the coefficients.
+8. Apply IDCT to the coefficients.
+9. Convert the image back to RGB color space.
 """
 
 from os import sys
