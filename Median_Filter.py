@@ -96,21 +96,3 @@ class MedianFilter:
         filtered_image.save(output_path)
         return filtered_image
 
-    def original_image_size(self):
-        """Function Documentation
-        This function is used to get the size of the original image.
-        
-        Returns:
-        image.size: The size of the original image.
-        """
-        return self.image.size
-
-    def new_image_size(self):
-        """Function Documentation
-        This function is used to get the size of the new image.
-        
-        Returns:
-        self.image.size: The size of the new image. 
-        """
-        return self.process_image().size
-
