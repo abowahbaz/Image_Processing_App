@@ -1,1 +1,1 @@
-python -u -W ignore::DeprecationWarning "home.py"
+start /min python -u -W ignore::DeprecationWarning "home.py"
