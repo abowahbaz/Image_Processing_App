@@ -47,7 +47,7 @@ class AverageFilter:
             print("File not found")
             sys.exit(1)
 
-    def average_filter_custom(self, image_array, size=3):
+    def average_filter_custom(self, image_array, kernel_size=3):
         """Function Documentation
         This function is used to apply average filter to an image.
         The average filter replaces each pixel's 
@@ -55,20 +55,20 @@ class AverageFilter:
         
         Args:
         image_array: The input image array.
-        size: The size of the neighborhood.
+        kernel_size: The size of the neighborhood.
         
         Returns:
         filtered_img: The filtered image array.
         
         """
-        pad = size // 2
-        padded_img = np.pad(image_array, pad, mode="constant", constant_values=0)
+        height, width = image_array.shape
+        padding = kernel_size // 2
+        padded_img = np.pad(image_array, padding, mode="edge")
         filtered_img = np.zeros_like(image_array)
-
-        for i in range(image_array.shape[0]):
-            for j in range(image_array.shape[1]):
-                window = padded_img[i : i + size, j : j + size]
-                filtered_img[i, j] = np.mean(window)
+        for row in range(height):
+            for col in range(width):
+                kernel_window = padded_img[row : row + kernel_size, col : col + kernel_size]
+                filtered_img[row, col] = int(np.mean(kernel_window))
 
         return filtered_img
 
