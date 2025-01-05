@@ -1,25 +1,13 @@
-"""
-    Module Documentation :
-     This module is used to apply median filter to an image.
-     The median filter replaces each pixel's value with the median
-     value of the pixels in the neighborhood.
-     The size of the neighborhood is specified by the user.
-     The median filter is a non-linear filter.
-     The median filter is used to remove salt and pepper noise from an image.
-     The median filter is used to remove impulse/random noise from an image.
-"""
-
 import numpy as np
-from os import sys
 from PIL import Image
+import os
 
 
 class MedianFilter:
     """
     Class Documentation:
-     This class is used to apply median filter to an image.
-     The median filter replaces each pixel's
-     value with the median value of the pixels in the neighborhood.
+     This class is used to apply a median filter to an image or a custom array.
+     The median filter replaces each pixel's value with the median value of the pixels in the neighborhood.
 
     Attributes:
      input_path: The path of the input image file.
@@ -27,51 +15,25 @@ class MedianFilter:
 
     Methods:
      __init__: The constructor method used to initialize the class attributes.
-     median_filter_custom: The method used to apply median filter to an image.
+     median_filter_custom: The method used to apply median filter to an image or array.
      process_image: The method used to process the image.
-     original_image_size: The method used to get the size of the original image.
-     new_image_size: The method used to get the size of the new image.
-
     """
 
     def __init__(self, input_path=None):
-        """
-        Constructor Documentation
-         This method is used to initialize the class attributes.
-
-         Args:
-          input_path: The path of the input image file.
-
-         Returns:
-          None
-
-        """
+        """Constructor Documentation"""
         self.input_path = input_path
-        try:
-            self.image = Image.open(input_path).convert("L")
-        except FileNotFoundError:
-            print("File not found")
-            sys.exit(1)
+        if input_path:
+            try:
+                self.image = Image.open(input_path).convert("L")
+            except FileNotFoundError:
+                print("File not found")
+                exit(1)
+        else:
+            self.image = None
 
     def median_filter_custom(self, image_array, size=3, method="padding"):
-        """
-        Function Documentation
+        """Applies median filter to an image or array"""
 
-         This function applies a median filter to an image using different edge-handling methods.
-
-         Args:
-         image_array: The input image array.
-         size: The size of the neighborhood.
-         method: The method for edge handling. Options are:
-            - "padding": Add constant padding (default is 0).
-            - "crop": Ignore edges, resulting in a smaller output image.
-            - "reflect": Reflect the image values at the edge.
-            - "edge": Repeat the edge values.
-            - "symmetric": Symmetrically mirror the edge values.
-
-         Returns:
-          filtered_img: The filtered image array.
-        """
         pad = size // 2
 
         if method == "padding":
@@ -114,34 +76,58 @@ class MedianFilter:
 
         return filtered_img
 
+    def process_image(self, size=3, method="padding"):
+        """Processes the image using the chosen edge-handling method"""
 
-def process_image(self, size=3, method="padding"):
-    """Function Documentation
-    This function processes the image using the chosen edge-handling method.
+        if self.image is None:
+            raise ValueError("No image loaded to process")
 
-    Args:
-    size: The size of the neighborhood.
-    method: The method for edge handling. Options are:
-        - "padding"
-        - "crop"
-        - "reflect"
-        - "edge"
-        - "symmetric"
+        image_array = np.array(self.image)
+        
+        filtered_image_array = self.median_filter_custom(image_array, size, method)
 
-    Returns:
-    filtered_image: The filtered image.
+        filtered_image = Image.fromarray(filtered_image_array.astype(np.uint8))
+
+        output_dir = "filtered"
+        os.makedirs(output_dir, exist_ok=True)
+        
+        output_path = f"{output_dir}/{os.path.basename(self.input_path).split('.')[0]}_median_filtered_{method}.jpg"
+        filtered_image.save(output_path)
+        
+        return filtered_image
+
+
+def test_filter_on_custom_array_median():
     """
-    image_array = np.array(self.image)
-
-    filtered_image_array = self.median_filter_custom(image_array, size, method)
-
-    filtered_image = Image.fromarray(filtered_image_array.astype(np.uint8))
-
-    output_path = (
-        "filtered/"
-        + self.input_path.split("/")[-1].split(".")[0]
-        + f"_median_filtered_{method}.jpg"
+    This function allows the user to input a custom array and test the median filter
+    with different methods for edge handling.
+    """
+    print(
+        "Enter a 2D array (as a list of lists). Example: [[1, 2, 3], [4, 5, 6], [7, 8, 9]]"
     )
-    filtered_image.save(output_path)
-    return filtered_image
+    user_input = input("Your 2D array: ")
 
+    try:
+        custom_array = np.array(eval(user_input))
+        if custom_array.ndim != 2:
+            raise ValueError("Please enter a valid 2D array.")
+
+        print("\nOriginal Array:")
+        print(custom_array)
+
+        size = int(input("Enter the filter size (e.g., 3 for a 3x3 filter): "))
+        method = input(
+            "Choose an edge-handling method (padding, crop, reflect, edge, symmetric): "
+        )
+
+        filter_obj = MedianFilter()
+        filtered_array = filter_obj.median_filter_custom(custom_array, size, method)
+
+        print(f"\nFiltered Array (Method: {method}):")
+        print(filtered_array)
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+
+# Calling the function for testing
+# test_filter_on_custom_array_median()
