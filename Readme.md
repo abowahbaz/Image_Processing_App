@@ -53,7 +53,7 @@ Or just double click `Run Project.bat` file and it will do all the previous step
 ---
 
 1. Choose the desired operation from the main menu.
-   ![Home](./ReadMe%20Images/home.png)
+   ![Home](./ReadMe_Images/home.png)
 
 
 2. JPEG Compression:
