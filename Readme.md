@@ -53,18 +53,18 @@ Or just double click `Run Project.bat` file and it will do all the previous step
 ---
 
 1. Choose the desired operation from the home menu.
-   ![Home](./ReadMe%20Images/home.png)
+   ![Home](./ReadMe%20Images/home.PNG)
 
 2. JPEG Compression:
 
    - Choose the image you want to compress.
    - Click the compress button.
 
-   ![JPEG Choose](./ReadMe%20Images/jpeg_choose.png)
+   ![JPEG Choose](./ReadMe%20Images/jpeg_choose.PNG)
 
    - The compressed image will be saved in the `Compressed` folder.
 
-   ![JPEG Comparison](./ReadMe%20Images/jpeg_compare.png)
+   ![JPEG Comparison](./ReadMe%20Images/jpeg_compare.PNG)
 
    - the old image and the compressed image will be displayed in the GUI window,as well as the compression ratio, with sizes comparison.
 
@@ -76,11 +76,11 @@ Or just double click `Run Project.bat` file and it will do all the previous step
    - Choose the edge handling method.
    - Click the filter button.
 
-   ![Noise Choose](./ReadMe%20Images/noise_choose.png)
+   ![Noise Choose](./ReadMe%20Images/noise_choose.PNG)
 
    - The filtered image will be saved in the `Filtered` folder.
 
-   ![Noise Comparison](./ReadMe%20Images/noise_compare.png)
+   ![Noise Comparison](./ReadMe%20Images/noise_compare.PNG)
 
    - the old image and the filtered image will be displayed in the GUI window.
 
