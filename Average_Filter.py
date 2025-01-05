@@ -116,17 +116,17 @@ class AverageFilter:
             raise ValueError("No image loaded to process")
 
         image_array = np.array(self.image)
-        
+
         filtered_image_array = self.average_filter_custom(image_array, size, method)
 
         filtered_image = Image.fromarray(filtered_image_array.astype(np.uint8))
 
         output_dir = "filtered"
         os.makedirs(output_dir, exist_ok=True)
-        
-        output_path = f"{output_dir}/{os.path.basename(self.input_path).split('.')[0]}_average_filtered_{method}.jpg"
+
+        output_path = f"{output_dir}/{os.path.basename(self.input_path).split('.')[0]}_average_filtered.jpg"
         filtered_image.save(output_path)
-        
+
         return filtered_image
 
     def original_image_size(self):
@@ -154,22 +154,24 @@ def test_filter_on_custom_array():
     This function allows the user to input a custom array and test the average filter
     with different methods for edge handling.
     """
-    print("Enter a 2D array (as a list of lists). Example: [[1, 2, 3], [4, 5, 6], [7, 8, 9]]")
+    print(
+        "Enter a 2D array (as a list of lists). Example: [[1, 2, 3], [4, 5, 6], [7, 8, 9]]"
+    )
     user_input = input("Your 2D array: ")
-    
+
     try:
         custom_array = np.array(eval(user_input))
         print("\nOriginal Array:")
         print(custom_array)
-        
+
         size = int(input("Enter the filter size (e.g., 3 for a 3x3 filter): "))
         method = input(
             "Choose an edge-handling method (padding, crop, reflect, edge, symmetric): "
         )
-        
+
         filter_obj = AverageFilter()
         filtered_array = filter_obj.average_filter_custom(custom_array, size, method)
-        
+
         print(f"\nFiltered Array (Method: {method}):")
         print(filtered_array)
     except Exception as e:

@@ -151,7 +151,7 @@
     <property name="geometry">
      <rect>
       <x>410</x>
-      <y>620</y>
+      <y>650</y>
       <width>250</width>
       <height>31</height>
      </rect>
@@ -218,6 +218,62 @@
     <property name="text">
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Intensity :&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
+   </widget>
+   <widget class="QComboBox" name="method_list">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>610</y>
+      <width>250</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>JetBrains Mono</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string/>
+    </property>
+    <property name="statusTip">
+     <string>Choose edge handle method</string>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="editable">
+     <bool>false</bool>
+    </property>
+    <item>
+     <property name="text">
+      <string>Padding</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Reflect</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Edge</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Symmetric</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Crop</string>
+     </property>
+    </item>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

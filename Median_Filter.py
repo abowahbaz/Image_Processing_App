@@ -83,17 +83,17 @@ class MedianFilter:
             raise ValueError("No image loaded to process")
 
         image_array = np.array(self.image)
-        
+
         filtered_image_array = self.median_filter_custom(image_array, size, method)
 
         filtered_image = Image.fromarray(filtered_image_array.astype(np.uint8))
 
         output_dir = "filtered"
         os.makedirs(output_dir, exist_ok=True)
-        
-        output_path = f"{output_dir}/{os.path.basename(self.input_path).split('.')[0]}_median_filtered_{method}.jpg"
+
+        output_path = f"{output_dir}/{os.path.basename(self.input_path).split('.')[0]}_median_filtered.jpg"
         filtered_image.save(output_path)
-        
+
         return filtered_image
 
 

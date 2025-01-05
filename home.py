@@ -3,28 +3,27 @@ import sys
 import os
 from PyQt5.uic import loadUi
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QMainWindow, QApplication,QGraphicsScene
+from PyQt5.QtWidgets import QMainWindow, QApplication, QGraphicsScene
 from PyQt5 import QtGui
 import ctypes
 
 
 # Algorithm Imports
-from JPEG_Compression import Compressor 
+from JPEG_Compression import Compressor
 from Median_Filter import MedianFilter
 from Average_Filter import AverageFilter
-
 
 
 class Home(QMainWindow):
     def __init__(self):
         super(Home, self).__init__()
-        loadUi('home.ui', self)
+        loadUi("home.ui", self)
         self.jpeg_button.clicked.connect(self.go_to_jpeg)
         self.noise_button.clicked.connect(self.go_to_noise)
 
     def go_to_jpeg(self):
-       widgets.setCurrentWidget(jpeg)
-    
+        widgets.setCurrentWidget(jpeg)
+
     def go_to_noise(self):
         widgets.setCurrentWidget(noise)
 
@@ -35,43 +34,45 @@ class JPEG(QMainWindow):
         self.reset_fields()
 
     def reset_fields(self):
-        loadUi('jpeg.ui', self)
+        loadUi("jpeg.ui", self)
         self.home_button.clicked.connect(self.to_home)
         self.choose_file_button.clicked.connect(self.add_file)
         self.compress_button.clicked.connect(self.compress)
         self.input_path = ""
         self.output_path = ""
-        self.compress_button.setDisabled(True)     
-      
+        self.compress_button.setDisabled(True)
 
     def to_home(self):
         self.reset_fields()
         widgets.setCurrentWidget(home)
-        
-       
-        
 
     def add_file(self):
         self.input_path = ""
         try:
-            self.input_path = QtWidgets.QFileDialog.getOpenFileName(self, 'Open file', 'Images/')[0]
+            self.input_path = QtWidgets.QFileDialog.getOpenFileName(
+                self, "Open file", "Images/"
+            )[0]
         except:
             print("No file selected")
 
-        self.output_path = "compressed/" + self.input_path.split('/')[-1].split('.')[0] + "_compressed.jpg"          
+        self.output_path = (
+            "compressed/"
+            + self.input_path.split("/")[-1].split(".")[0]
+            + "_compressed.jpg"
+        )
         self.compress_button.setDisabled(False)
         scene = QGraphicsScene()
         pixmap = QtGui.QPixmap(self.input_path)
         scene.addPixmap(pixmap)
         self.image_view.setScene(scene)
-        self.image_view.show()        
+        self.image_view.show()
 
     # Compress and view a comparison of the original and compressed images
 
     def compress(self):
         comp = Compressor(self.input_path)
         comp.compress()
-        loadUi('jpeg_compare.ui', self)
+        loadUi("jpeg_compare.ui", self)
         self.home_button.clicked.connect(self.view_to_home)
         self.show_images()
 
@@ -90,8 +91,10 @@ class JPEG(QMainWindow):
         self.osize_value.setText(f"{os.path.getsize(self.input_path) / 1024:.2f} KB")
         self.nsize_value.setText(f"{os.path.getsize(self.output_path) / 1024:.2f} KB")
 
-        ratio = round(os.path.getsize(self.output_path) / os.path.getsize(self.input_path), 2) # percentage compression
-        self.comp_value.setText(f"{ratio * 100:.2f}%")
+        ratio = round(
+            os.path.getsize(self.output_path) / os.path.getsize(self.input_path), 2
+        )  # percentage compression
+        self.comp_value.setText(f"{(1-ratio) * 100:.2f}%")
 
         scene = QGraphicsScene()
         pixmap = QtGui.QPixmap(self.output_path)
@@ -106,7 +109,7 @@ class NoiseReduction(QMainWindow):
         self.reset_fields()
 
     def reset_fields(self):
-        loadUi('noise.ui', self)
+        loadUi("noise.ui", self)
         self.choose_file_button.clicked.connect(self.add_file)
         self.home_button.clicked.connect(self.to_home)
         self.filter_button.clicked.connect(self.filter_image)
@@ -119,16 +122,18 @@ class NoiseReduction(QMainWindow):
         self.filter_button.setVisible(self.state)
         self.filter_list.setVisible(self.state)
         self.intensity_box.setVisible(self.state)
-        
+        self.method_list.setVisible(self.state)
 
-    def to_home(self): # Reset fields and go back to home from noise reduction
+    def to_home(self):  # Reset fields and go back to home from noise reduction
         self.reset_fields()
         widgets.setCurrentWidget(home)
 
     def add_file(self):
         self.input_path = ""
         try:
-            self.input_path = QtWidgets.QFileDialog.getOpenFileName(self, 'Open file', 'Images/')[0]
+            self.input_path = QtWidgets.QFileDialog.getOpenFileName(
+                self, "Open file", "Images/"
+            )[0]
         except:
             print("No file selected")
         self.state = True
@@ -140,9 +145,10 @@ class NoiseReduction(QMainWindow):
         self.image_view.show()
 
     def filter_image(self):
-        self.output_path = "filtered/" + self.input_path.split('/')[-1].split('.')[0]
+        self.output_path = "filtered/" + self.input_path.split("/")[-1].split(".")[0]
         intensity = self.intensity_box.value()
         is_median = self.filter_list.currentText() == "Median Filter"
+        method = self.method_list.currentText().lower()
         if is_median:
             filter = MedianFilter(self.input_path)
             self.output_path += "_median_filtered.jpg"
@@ -150,11 +156,11 @@ class NoiseReduction(QMainWindow):
             filter = AverageFilter(self.input_path)
             self.output_path += "_average_filtered.jpg"
 
-        filter.process_image(intensity)
+        filter.process_image(intensity, method)
         self.show_images()
 
     def show_images(self):
-        loadUi('noise_compare.ui', self)
+        loadUi("noise_compare.ui", self)
         self.home_button.clicked.connect(self.view_to_home)
         scene = QGraphicsScene()
         pixmap = QtGui.QPixmap(self.input_path)
@@ -167,7 +173,9 @@ class NoiseReduction(QMainWindow):
         self.new_image_view.setScene(scene)
         self.new_image_view.show()
 
-    def view_to_home(self): # Reset fields and go back to home from noise reduction comparison
+    def view_to_home(
+        self,
+    ):  # Reset fields and go back to home from noise reduction comparison
         self.old_image_view.setScene(None)
         self.new_image_view.setScene(None)
         self.reset_fields()
@@ -179,11 +187,10 @@ class NoiseReduction(QMainWindow):
 # =================================  Main Program  =================================================
 app = QApplication(sys.argv)
 app.setApplicationName("Image Processing App")
-app.setWindowIcon(QtGui.QIcon('icon.png'))
-myappid = 'nitros.dip.practical.1' 
+app.setWindowIcon(QtGui.QIcon("icon.png"))
+myappid = "nitros.dip.practical.1"
 ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
-app.setStyle('Fusion')  
-
+app.setStyle("Fusion")
 
 
 home = Home()
@@ -196,9 +203,8 @@ widgets.addWidget(jpeg)
 widgets.addWidget(noise)
 
 widgets.setFixedHeight(768)
-widgets.setFixedWidth(1366) 
+widgets.setFixedWidth(1366)
 widgets.show()
-
 
 
 try:
