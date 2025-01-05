@@ -28,7 +28,7 @@ Before you begin, ensure you have met the following requirements:
 
 ## 🛠️ Installation
 
-1. First, clone the repository using the following command:
+1. First,clone the repository using the following command:
 
 ```bash
 git clone https://github.com/abowahbaz/Image_Processing_App.git
@@ -52,36 +52,37 @@ Or just double click `Run Project.bat` file and it will do all the previous step
 
 ---
 
-1. Choose the desired operation from the main menu (Noise Reduction or JPEG Compression).
+1. Choose the desired operation from the main menu.
+   <img src = "./ReadMe%20Images/home.png" width = "500"/>
 
 2. JPEG Compression:
 
-    - Choose the image you want to compress.
-    - Click the compress button.
+   - Choose the image you want to compress.
+   - Click the compress button.
 
-     ![Choose Image](https://raw.githubusercontent.com/abowahbaz/Image_Processing_App/main/ReadMe%20Images/jpeg_choose.png)
+    <img src = "./ReadMe%20Images/jpeg_choose.png" width = "500"/>
 
-    - The compressed image will be saved in the `Compressed` folder.
+   - The compressed image will be saved in the `Compressed` folder.
 
-     ![Compare Images](https://raw.githubusercontent.com/abowahbaz/Image_Processing_App/main/ReadMe%20Images/jpeg_compare.png)
+    <img src = "./ReadMe%20Images/jpeg_compare.png" width = "500"/>
 
-    - The old image and the compressed image will be displayed in the GUI window, as well as the compression ratio, with sizes comparison.
+   - the old image and the compressed image will be displayed in the GUI window,as well as the compression ratio, with sizes comparison.
 
 3. Noise Reduction:
 
-    - Choose the image you want to reduce noise from.
-    - Choose the filter type (Median or Average).
-    - Choose the filter size.
-    - Choose the edge handling method.
-    - Click the filter button.
+   - Choose the image you want to reduce noise from.
+   - Choose the filter type (Median or Average).
+   - Choose the filter size.
+   - Choose the edge handling method.
+   - Click the filter button.
 
-     ![Choose Image](https://raw.githubusercontent.com/abowahbaz/Image_Processing_App/main/ReadMe%20Images/noise_choose.png)
+    <img src = "./ReadMe%20Images/noise_choose.png" width = "500"/>
 
-    - The filtered image will be saved in the `Filtered` folder.
+   - The filtered image will be saved in the `Filtered` folder.
 
-     ![Compare Images](https://raw.githubusercontent.com/abowahbaz/Image_Processing_App/main/ReadMe%20Images/noise_compare.png)
+    <img src = "./ReadMe%20Images/noise_compare.png" width = "500"/>
 
-    - The old image and the filtered image will be displayed in the GUI window.
+   - the old image and the filtered image will be displayed in the GUI window.
 
 ## 📁 Project Structure
 
@@ -97,7 +98,7 @@ Or just double click `Run Project.bat` file and it will do all the previous step
 
 `Filtered` : The folder that contains the filtered images.
 
-`jpeg_ui`, `jpeg_compare.ui`, `noise_ui`, `noise_compare.ui` : The GUI files.
+`jpeg_ui` ,`jpeg_compare.ui` ,`noise_ui` ,`noise_compare.ui` : The GUI files.
 
 ## 🤝 Contributing
 
