@@ -53,7 +53,8 @@ Or just double click `Run Project.bat` file and it will do all the previous step
 ---
 
 1. Choose the desired operation from the main menu.
-   <img src = "./ReadMe%20Images/home.png" width = "500"/>
+   ![Home](./ReadMe%20Images/home.png)
+
 
 2. JPEG Compression:
 
